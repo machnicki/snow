@@ -25,7 +25,7 @@ module.exports = {
     'no-loop-func':[1],
     'indent': [
         'error',
-        'tab'
+        2
     ],
     'linebreak-style': [
         'error',
