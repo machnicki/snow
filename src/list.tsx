@@ -4,7 +4,7 @@ import { Movie } from './types/';
 
 type ListProps = {
   movies: Movie[];
-  onClickMovie: (number) => null;
+  onClickMovie: (number) => any;
 }
 
 const List = ({ movies = [], onClickMovie = (_) => null }: ListProps) => {

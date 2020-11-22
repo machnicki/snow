@@ -16,4 +16,14 @@ describe('#list', () => {
 
     expect(1).toEqual(1);
   });
+
+  it('should call click', () => {
+    const onClickMovie = jest.fn();
+    render((<List movies={movies} onClickMovie={onClickMovie} />));
+
+    const movie = screen.getByText('Movie A');
+    fireEvent.click(movie);
+
+    expect(onClickMovie).toHaveBeenCalledWith(0);
+  });
 });

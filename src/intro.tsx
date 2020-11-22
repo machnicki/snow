@@ -1,33 +1,34 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, useEffect } from 'react';
 import Preview from './preview';
 import List from './list';
 import Promotion from './promotion';
+import useMoviesReducer from './redux/movies';
 
 export const SavedContext = createContext({
-  saved: [], addToList: () => null,
+  saved: [], addToList: (_: any) => null,
 });
 
-const movies = [
-  { index: 0, title: 'Movie A', description: 'This is movie A' },
-  { index: 1, title: 'Movie B', description: 'This is movie B' },
-  { index: 2, title: 'Movie C', description: 'This is movie C' }
-];
-
 const Intro = () => {
-  const [activeMovie, setActiveMovie] = useState(movies[0]);
+  const { state: { isLoading, data: movies }, getMovies } = useMoviesReducer();
+  const [activeMovie, setActiveMovie] = useState(0);
   const [saved, addToList] = useState([]);
 
-  const handleMovieClick = (movieIndex) =>  setActiveMovie(movies[movieIndex]);
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  const handleMovieClick = (movieIndex) => setActiveMovie(movieIndex);
 
   console.log('===> saved intro', saved);
 
   return (
+    isLoading ? <div>loading...</div> : 
     <>
-      <SavedContext.Provider value={{saved, addToList}}>
-        <Preview movie={activeMovie} isSaved={saved.indexOf(activeMovie.index) > -1} />
+      {movies.length === 0 ? <div>no movies...</div> : <SavedContext.Provider value={{saved, addToList}}>
+        <Preview movie={movies[activeMovie]} isSaved={saved.indexOf(activeMovie) > -1} />
         <List movies={movies} onClickMovie={handleMovieClick} />
-        {activeMovie.index === 1 && <Promotion />}
-      </SavedContext.Provider>
+        {activeMovie === 1 && <Promotion />}
+      </SavedContext.Provider>}
     </>
   );
 };

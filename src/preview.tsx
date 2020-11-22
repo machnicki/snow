@@ -1,10 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Movie } from './types/';
 
-const wait = (time) => new Promise((resolve) => {
-  setTimeout(resolve, time);
-});
-
 const renderDesc = (desc) => {
   console.log('renderDesc');
 
