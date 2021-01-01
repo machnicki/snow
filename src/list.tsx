@@ -9,10 +9,7 @@ type ListProps = {
 
 const List = ({ movies = [], onClickMovie = (_) => null }: ListProps) => {
   const {saved , addToList} = useContext(SavedContext);
-
   const handleSaveClick = (movieIndex) => () => addToList((list) => ([...list, movieIndex]));
-
-  console.log('===> saved list', saved);
 
   return (
     <ul>
